@@ -12,11 +12,13 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+
 public class NoticeController {
 
     private final NoticeRepository noticeRepository;
 
     private final NoticeService noticeService;
+
 
     @PostMapping("/api/post")
     public Notice createNotice(@RequestBody NoticeRequestDto requestDto) {
@@ -39,5 +41,10 @@ public class NoticeController {
     public Long deleteNotice(@PathVariable Long id) {
         noticeRepository.deleteById(id);
         return id;
+    }
+
+    @GetMapping("/api/post/{id}")
+    public Notice readNotice(@PathVariable Long id) {
+        return noticeRepository.findById(id).orElse(null);
     }
 }

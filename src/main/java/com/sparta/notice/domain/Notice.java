@@ -1,5 +1,6 @@
 package com.sparta.notice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,9 +11,13 @@ import javax.persistence.*;
 @Getter
 @Entity
 public class Notice extends Timestamped {
+
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id
+    @javax.persistence.Id
     private Long Id;
+
+    @Column(nullable = false)
+    private String Success;
 
     @Column(nullable = false)
     private String title;
@@ -22,18 +27,12 @@ public class Notice extends Timestamped {
 
     @Column(nullable = false)
     private String author;
-
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
-    public Notice(String title, String content, String author, String password) {
-        this.title = title;
-        this.content = content;
-        this.password = password;
-        this.author = author;
-    }
-
     public Notice(NoticeRequestDto requestDto){
+        this.Success = requestDto.getSuccess();
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.password = requestDto.getPassword();
@@ -41,11 +40,11 @@ public class Notice extends Timestamped {
     }
 
     public void update(NoticeRequestDto requestDto) {
-       this.title = requestDto.getTitle();
-       this.content = requestDto.getContent();
-       this.password = requestDto.getPassword();
-       this.author = requestDto.getAuthor();
-
+        this.Success = requestDto.getSuccess();
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.password = requestDto.getPassword();
+        this.author = requestDto.getAuthor();
     }
 
 }
