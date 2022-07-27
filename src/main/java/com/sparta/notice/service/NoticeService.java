@@ -29,7 +29,7 @@ public class NoticeService {
             () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         boolean isEq = Objects.equals(notice.getPassword(), password);
-        System.out.println("date:true");
+        System.out.println("a");
         return isEq;
         }
     }

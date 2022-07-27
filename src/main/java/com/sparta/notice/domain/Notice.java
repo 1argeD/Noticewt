@@ -17,9 +17,6 @@ public class Notice extends Timestamped {
     private Long Id;
 
     @Column(nullable = false)
-    private String Success;
-
-    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
@@ -32,7 +29,6 @@ public class Notice extends Timestamped {
     private String password;
 
     public Notice(NoticeRequestDto requestDto){
-        this.Success = requestDto.getSuccess();
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.password = requestDto.getPassword();
@@ -40,7 +36,6 @@ public class Notice extends Timestamped {
     }
 
     public void update(NoticeRequestDto requestDto) {
-        this.Success = requestDto.getSuccess();
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.password = requestDto.getPassword();
