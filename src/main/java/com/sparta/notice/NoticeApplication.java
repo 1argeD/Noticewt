@@ -19,10 +19,6 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 @EnableJpaAuditing
 @SpringBootApplication
 public class NoticeApplication {
-	@Id
-	private String title;
-	private String author;
-	private String content;
 
 	public static void main(String[] args) { SpringApplication.run(NoticeApplication.class, args);}
 //	@Bean

@@ -16,12 +16,12 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
 
     @Transactional
-    public Long update(Long id, NoticeRequestDto requestDto) {
+    public Notice update(Long id, NoticeRequestDto requestDto) {
         Notice notice = noticeRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         notice.update(requestDto);
-        return notice.getId();
+        return notice;
     }
     @Transactional
     public boolean isValidPassword(String password, Long id) {
