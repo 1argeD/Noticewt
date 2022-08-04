@@ -1,12 +1,14 @@
 package com.sparta.notice.Controller;
-
-import com.sparta.notice.domain.Notice;
-import com.sparta.notice.domain.NoticeContainer;
-import com.sparta.notice.domain.NoticeRepository;
-import com.sparta.notice.domain.NoticeRequestDto;
+;
+import com.sparta.notice.model.Notice;
+import com.sparta.notice.Dto.NoticeContainer;
+import com.sparta.notice.Reposirtory.NoticeRepository;
+import com.sparta.notice.Dto.NoticeRequestDto;
 
 import com.sparta.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,11 +23,11 @@ public class NoticeController {
     private final NoticeService noticeService;
 
 
-    @PostMapping("/api/post")
-    public NoticeContainer<Notice> createNotice(@RequestBody NoticeRequestDto requestDto) {
+    @PostMapping("/api/auth/post")
+    public NoticeContainer<Notice> createNotice(@RequestBody @AuthenticationPrincipal UserDetails users) {
         Notice notice = null;
         try {
-            notice = new Notice(requestDto);
+            notice = new Notice((NoticeRequestDto) users);
             noticeRepository.save(notice);
         } catch (Exception e) {
             System.out.println("Exception" + e.getMessage());
@@ -45,10 +47,10 @@ public class NoticeController {
     }
 
     @PutMapping("/api/post/{id}")
-    public NoticeContainer<Notice> updateNotice(@PathVariable Long id, @RequestBody NoticeRequestDto requestDto) {
+    public NoticeContainer<Notice> updateNotice(@AuthenticationPrincipal UserDetails users) {
         Notice notice = null;
         try {
-            notice = noticeService.update(id, requestDto);
+            notice = noticeService.update(users);
         } catch (Exception e) {
             System.out.println("Exception" + e.getMessage());
         }
@@ -66,10 +68,10 @@ public class NoticeController {
     }
 
     @PostMapping("/api/post/{id}")
-    public NoticeContainer<Boolean> chkNotice(@PathVariable Long id, @RequestBody NoticeRequestDto requestDto) {
+    public NoticeContainer<Boolean> chkNotice(@AuthenticationPrincipal UserDetails users) {
         boolean chk = false;
         try {
-            chk = noticeService.isValidPassword(String.valueOf(requestDto.getPassword()), id);
+            chk = noticeService.isValidPassword(users.getPassword());
         } catch (Exception e) {
             System.out.println("Exception" + e.getMessage());
         }
@@ -77,10 +79,10 @@ public class NoticeController {
     }
 
     @GetMapping("/api/post/{id}")
-    public NoticeContainer<Notice> readNotice(@PathVariable Long id) {
+    public NoticeContainer<Notice> readNotice(@AuthenticationPrincipal UserDetails users) {
         Notice notice = null;
         try {
-            notice = noticeRepository.findById(id).orElse(null);
+            notice = noticeRepository.findById(Long.valueOf(users.getUsername())).orElse(null);
         } catch (Exception e) {
             System.out.println("Exception" + e.getMessage());
         }

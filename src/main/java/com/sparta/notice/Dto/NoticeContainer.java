@@ -1,4 +1,4 @@
-package com.sparta.notice.domain;
+package com.sparta.notice.Dto;
 
 import lombok.Getter;
 import lombok.Setter;

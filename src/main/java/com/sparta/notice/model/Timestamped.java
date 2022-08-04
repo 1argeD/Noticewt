@@ -1,4 +1,4 @@
-package com.sparta.notice.domain;
+package com.sparta.notice.model;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
